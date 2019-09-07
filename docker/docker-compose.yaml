@@ -1,16 +1,25 @@
 version: "3"
 services:
-    postgres:
-        image: postgres:9.6
-        environment:
-            - POSTGRES_PASSWORD=""
-        ports:
-            - "5432:5432"
-    clair:
-        image: quay.io/coreos/clair-git:latest
-        ports:
-            - "6060-6061:6060-6061"
-        volumes:
-            - ./clair_config.yaml:/config/config.yaml
-        network_mode: "host"
-        command: ["-config=/config/config.yaml"]
+  postgres:
+    container_name: postgres
+    image: postgres:9.6
+    environment:
+      POSTGRES_PASSWORD: password
+    ports:
+      - "5432:5432"
+    networks:
+      clair:
+  clair:
+    image: quay.io/coreos/clair-git:latest
+    ports:
+      - "6060:6060"
+      - "6061:6061"
+    volumes:
+      - ./clair_config.yaml:/config/config.yaml
+    networks:
+      clair:
+    # network_mode: "host"
+    command: ["-config=/config/config.yaml"]
+networks:
+  clair:
+    external: false
