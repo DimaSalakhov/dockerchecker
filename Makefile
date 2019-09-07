@@ -8,6 +8,9 @@ build : $(SRCS)
 	@echo ">> Building"
 	go build -ldflags "-X main.gitRev=$(DOCKER_TAG)" -o $(ARTIFACT) .
 
+demo : build
+	./$(ARTIFACT) -debug -d ./demo
+
 .PHONY: docker-build
 docker-build :
 	@echo ">> Building"

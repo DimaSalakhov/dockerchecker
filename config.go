@@ -15,7 +15,7 @@ type Config struct {
 func MustConfig() *Config {
 	fs := flag.NewFlagSet("checker", flag.ExitOnError)
 	var (
-		sourceDir = fs.String("d", ".", "directory to scan")
+		sourceDir = fs.String("d", ".", "directory with Dockerfiles to scan")
 		debug     = fs.Bool("debug", false, "show debug logs")
 	)
 	ff.Parse(fs, os.Args[1:],
